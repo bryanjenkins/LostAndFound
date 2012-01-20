@@ -1,0 +1,8 @@
+body {
+	padding-top: 80px;
+}
+
+h3.logo a {
+	padding-left: 50px;
+	background: url(../images/ucf-logo.png) left no-repeat;
+}
