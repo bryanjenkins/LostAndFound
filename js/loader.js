@@ -30,9 +30,9 @@ $(document).ready(function() {
 								  this.reset();
 								});
                 notify("success", "Item Successfully Added."); 
-            }
-        });
-    });
+		            }
+		        });
+		    });
     
     
     // Functions
