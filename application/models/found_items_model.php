@@ -35,7 +35,9 @@ function add_record()
 
 function add_record($data)
 	{
-		$this->db->insert('locations', $data);
+		$this->db->set('found_date', 'NOW()', FALSE); 
+		$this->db->set('expiration', 'NOW()', FALSE);
+		$this->db->insert('found_items', $data);
 	}
 	/*
 function update_record($id, $data)

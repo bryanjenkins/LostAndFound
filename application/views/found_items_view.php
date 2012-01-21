@@ -125,13 +125,13 @@
 		  <div class="modal-body">
 		    <?php echo form_open('found_items/create', 'id="create_found_item"'); ?>
 		      <div class="clearfix">
-		        <label for="item">Item:</label>
-		        <div class="input"><input type="text" id="item" name="item" placeholder="White iPhone 4s" /></div>
+		        <label for="add_record_item">Item:</label>
+		        <div class="input"><input type="text" id="add_record_item" name="add_record_item" placeholder="White iPhone 4s" /></div>
 		      </div>
 		      <div class="clearfix">
-		        <label for="container">Container:</label>
+		        <label for="add_record_container">Container:</label>
 		        <div class="input">
-              <select class="large" name="container" id="container">
+              <select class="large" name="add_record_container" id="add_record_container">
                 <option value="1">Cell Phones</option>
                 <option value="2">Computers</option>
                 <option value="3">Misc Electronics</option>
@@ -143,21 +143,23 @@
             </div>
 		      </div>
 		      <div class="clearfix">
-		        <label for="location">Location Found:</label>
+		        <label for="add_record_location">Location Found:</label>
 		        <div class="input">
-              <select class="large" name="location" id="location">
+              <select class="large" name="add_record_location" id="add_record_location">
                 <option value="1">Lobby</option>
                 <option value="2">1st Floor</option>
                 <option value="3">2nd Floor</option>
               </select>
             </div>
 		      </div>
-		      <div class="clearfix">
+		      <!--
+<div class="clearfix">
 		        <label for="date">Date:</label>
 		        <div class = "input"> 
-						  <input type="text" name="date" id="date" placeholder="yyyy-mm-dd" /> 
+						  <input type="text" name="add_record_date" id="add_record_date" placeholder="yyyy-mm-dd" /> 
 						</div> 
 		      </div>
+-->
 		    <?php echo form_close(); ?>
 		  </div>
 		  <div class="modal-footer">

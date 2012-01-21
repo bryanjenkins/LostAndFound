@@ -12,12 +12,13 @@ $(document).ready(function() {
 	$('#create_found_item_submit_btn').click(function(e) {
 				e.preventDefault();
         var formData = {
-        	item: $('#item').val(),
-        	container: $('#container').val(),
-        	location: $('#location').val(),
-        	date: $('#date').val()
+        	add_record_item: $('#add_record_item').val(),
+        	add_record_container: $('#add_record_container').val(),
+        	add_record_location: $('#add_record_location').val()
         };
+        
         var url = $("#create_found_item").attr('action');
+                
         $.ajax({
             url:url,
             type:'post',
@@ -25,6 +26,9 @@ $(document).ready(function() {
             data:formData,
             success:function() {
                 addRecordModal.modal("hide");
+                $('#create_found_item').each (function(){
+								  this.reset();
+								});
                 notify("success", "Item Successfully Added."); 
             }
         });
