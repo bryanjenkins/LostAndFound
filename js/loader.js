@@ -24,11 +24,19 @@ $(document).ready(function() {
             type:'post',
             cache:false,
             data:formData,
-            success:function() {
+            success:function(result_id) {
+                
                 addRecordModal.modal("hide");
+                
+                //Add New Record to Table
+                alert(result_id);
+                
+                // Reset Form Values
                 $('#create_found_item').each (function(){
 								  this.reset();
 								});
+								
+								// Notify User
                 notify("success", "Item Successfully Added."); 
 		            }
 		        });

@@ -4,10 +4,23 @@ class Found_items_model extends CI_Model {
 
 	function get_records()
 	{
-		$q = $this->db->get('found_items');
-		return $q->result();
+		$q = $this->db->select('found_items.id as id, found_items.item as item, containers.container as container, locations.location as location, found_items.found_date as date')
+									->from('found_items')
+									->join('containers', 'found_items.container_id = containers.id')
+									->join('locations', 'found_items.location_id = locations.id');
+		
+		return $q->get()->result_array();
+		
 	}
 	
+	function get_record($id)
+	{
+		/*
+$q = $this->db->where('id', $id)
+									->select('')
+*/
+		
+	}
 	/*
 function add_record($data)
 	{
@@ -38,6 +51,9 @@ function add_record($data)
 		$this->db->set('found_date', 'NOW()', FALSE); 
 		$this->db->set('expiration', 'NOW()', FALSE);
 		$this->db->insert('found_items', $data);
+		
+		// For jQuery to add new row
+		echo $this->db->insert_id();
 	}
 	/*
 function update_record($id, $data)

@@ -59,7 +59,11 @@
       </div>
       <div class="span12">
        	<h1 style="float:left;">Found Items</h1>
-       	<p style="float:right;padding-top:10px;color:#A88552;"><span class="found-items-count">4</span> Items found</p>
+       	<p style="float:right;padding-top:10px;color:#A88552;"><span class="found-items-count"><?php echo $num_found_items; ?></span> Items found</p>
+       	<pre>
+       		<?php print_r($found_items); ?>
+       		<?php echo $found_items[0]['item']; ?>
+       	</pre>
        	<table id="employee-table" class="zebra-striped">
           <thead>
             <tr>
@@ -71,7 +75,22 @@
             </tr>
           </thead>
           <tbody>
-	          <tr>
+          
+          	<?php foreach($found_items as $found_item) : ?>
+	          	<tr>
+		          	<td><?php echo $found_item['item']; ?></td>
+		          	<td><?php echo $found_item['container']; ?></td>
+		          	<td><?php echo $found_item['location']; ?></td>
+		          	<td><?php echo $found_item['date']; ?></td>
+		          	<td>
+		          		<button data-controls-modal="edit-item-modal" data-id="<?php echo $found_item['id']; ?>" class="btn small"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button>
+		          		<button data-controls-modal="delete-item-modal" data-id="<?php echo $found_item['id']; ?>" class="btn small"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>
+		          	</td>
+		          </tr>	
+          	<?php endforeach; ?>
+	          
+	          <!--
+<tr>
 	          	<td>White iPhone 4s</td>
 	          	<td>Phones</td>
 	          	<td>1st Floor</td>
@@ -111,6 +130,7 @@
 	          		<button data-controls-modal="delete-item-modal" data-id="1" class="btn small"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>
 	          	</td>
 	          </tr>
+-->
          </tbody>
        </table>
       </div>

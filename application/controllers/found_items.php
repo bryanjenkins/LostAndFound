@@ -4,7 +4,16 @@ class Found_items extends CI_Controller {
 
 	function index()
 	{
-		$this->load->view('found_items_view');
+		$data['found_items'] = $this->found_items_model->get_records();
+		$data['num_found_items'] = count($data['found_items']);
+		
+		//Format Dates From xxxx:xx:xx xx:xx:xx To dd/mm/yyyy
+		for ($i = 0; $i < $data['num_found_items']; $i++) {
+			$date = $data['found_items'][$i]['date'];
+			$data['found_items'][$i]['date'] = $this->dateformat->format_date($date);
+		}
+		
+		$this->load->view('found_items_view', $data);
 	}
 	
 	function create()
