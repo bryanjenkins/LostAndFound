@@ -7,15 +7,17 @@
   <link rel="stylesheet" href="<?php echo base_url(); ?>css/bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo base_url(); ?>css/style.css" />
   <script src="<?php echo base_url(); ?>js/jquery.js"></script>
+  <script src="<?php echo base_url(); ?>js/jquery.dataTables.min.js"></script>
   <script src="<?php echo base_url(); ?>js/bootstrap-modal.js"></script>
   <script src="<?php echo base_url(); ?>js/bootstrap-alerts.js"></script>
   <script src="<?php echo base_url(); ?>js/bootstrap-tabs.js"></script>
   <script src="<?php echo base_url(); ?>js/bootstrap-dropdown.js"></script>
   <script src="<?php echo base_url(); ?>js/bootstrap-twipsy.js"></script>
+  <script src="<?php echo base_url(); ?>js/bootstrap-paging.js"></script>
   <script src="<?php echo base_url(); ?>js/loader.js"></script>
 </head>
 <body>
-	<div class="container">
+	<div id="main" class="container">
    
     <div class="topbar-wrapper" style="z-index: 5;">
     <div class="topbar" data-dropdown="dropdown">
@@ -26,9 +28,6 @@
 	            <li class="active"><a href="#">Found Items</a></li>
 	            <li><a href="#">Lost Items</a></li>
 	          </ul>
-	          <form class="pull-left" action="">
-	            <input type="text" placeholder="Search">
-	          </form>
 	          <ul class="nav secondary-nav">
 	            <li class="dropdown">
 	              <a href="#" class="dropdown-toggle">Jaime Smeriglio</a>
@@ -59,35 +58,33 @@
         <p><button id="add-item" data-controls-modal="add-item-modal" class="btn">Add an Item</button></p>
       </div>
       <div class="span12">
-       	<h1 style="float:left;">Found Items</h1>
-       	<p style="float:right;padding-top:10px;color:#A88552;"><span id="found-items-count"><?php echo $num_found_items; ?></span> Items found</p>
-       	<table id="found-items-table" class="zebra-striped">
-          <thead>
-            <tr>
-              <th> Item </th>
-              <th> Container </th>
-              <th> Location </th>
-              <th> Date Found </th>
-              <th> Actions </th>
-            </tr>
-          </thead>
-          <tbody>
-          
-          	<?php foreach($found_items as $found_item) : ?>
-	          	<tr>
-		          	<td><?php echo $found_item['item']; ?></td>
-		          	<td><?php echo $found_item['container']; ?></td>
-		          	<td><?php echo $found_item['location']; ?></td>
-		          	<td><?php echo $found_item['date']; ?></td>
-		          	<td>
-		          		<button data-controls-modal="return-item-modal" title="Return This Item" data-id="<?php echo $found_item['id']; ?>" class="btn small return"><img data-controls-modal="return-record-modal" src="images/return.png" alt="return" width="13" height="13" /></button>
-		          		<button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="<?php echo $found_item['id']; ?>" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button>
-		          		<button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="<?php echo $found_item['id']; ?>" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>
-		          	</td>
-		          </tr>	
-          	<?php endforeach; ?>
-         </tbody>
-       </table>
+       	<ul class="tabs" data-tabs="tabs" >
+       		<li class="active"><a href="#found_items">Unclaimed Items</a></li>
+  				<li><a href="#claimed_items">Claimed Items</a></li>
+       	</ul>
+       	<div class="pill-content">
+				  <div class="active" id="found_items">
+				  	<table id="found-items-table" class="datatable zebra-striped">
+					     <thead>
+					      <tr>
+						       <th class="sorting">Item</th>
+						       <th class="sorting">Container</th>
+						       <th class="sorting">Location</th>
+						       <th class="sorting">Date Found</th>
+						       <th>Actions</th>
+						      </tr>
+						    </thead>
+						   	<tbody>
+						     	<tr>
+										<td colspan="5" class="dataTables_empty">Loading found items...</td>
+									</tr>
+					     	</tbody>
+		    		</table>
+				  </div>
+				  <div id="claimed_items">
+				  	<p>Nothing Yet.</p>
+				  </div>
+				</div>
       </div>
     </div>
     
@@ -127,14 +124,6 @@
               </select>
             </div>
 		      </div>
-		      <!--
-<div class="clearfix">
-		        <label for="date">Date:</label>
-		        <div class = "input"> 
-						  <input type="text" name="add_record_date" id="add_record_date" placeholder="yyyy-mm-dd" /> 
-						</div> 
-		      </div>
--->
 		    <?php echo form_close(); ?>
 		  </div>
 		  <div class="modal-footer">

@@ -4,11 +4,47 @@ $(document).ready(function() {
 	
 	//End Testing
 	
-	//Variables
+//----------------------------------- Variables That Can Change -------------------------------
+	// Variables
+	var siteurl = "http://localhost:8888/ucf_lostandfound/index.php/"
 	var addRecordModal = $("#add-item-modal").modal({ backdrop: "static" });
  	var editRecordModal = $("#edit-item-modal").modal({ backdrop: "static" });
- 	var addRecordURL = "http://localhost:8888/ucf_lostandfound/index.php/found_items/update_table_with_new_record/";
- 	var deleteRecordURL = "http://localhost:8888/ucf_lostandfound/index.php/found_items/delete/"
+ 	var addRecordURL = siteurl + "found_items/update_table_with_new_record/";
+ 	var deleteRecordURL = siteurl + "found_items/delete/";
+ 	var getFoundItemsURL = siteurl + "found_items/found_items_ajax_listener/";
+ 	var foundItemTable;
+	
+	
+//----------------------------------- Datatables Scripts --------------------------------------
+	
+	foundItemTable = $('#found-items-table').dataTable({
+		"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+		"bProcessing": true,
+		"bServerSide": true,
+		"sPaginationType": "bootstrap",
+		"bAutoWidth": false,
+		"aaSorting": [[ 3, "desc" ]],
+		"sAjaxSource": getFoundItemsURL,
+		"fnServerData": function (aSource, aoData, fnCallback) {
+			$.ajax({
+				"dataType": "json",
+				"type": "POST",
+				"url": aSource,
+				"data": aoData,
+				"success": fnCallback
+			});
+		}
+	});
+	 
+	
+
+//----------------------------------- Tabs Scripts --------------------------------------------
+
+	$('.found_tabs').tabs()
+
+	
+//----------------------------------- CRUD Ajax Scripts ---------------------------------------
+	
 	
 	// Create a found item
 	$('#create_found_item_submit_btn').click(function(e) {
@@ -65,17 +101,9 @@ $(document).ready(function() {
         url:url,
         dataType:'json',
         cache:false,
-        success:function(new_record) {
+        success:function() {
         	
-        	//Add new row to table
-        	newHtmlRow = "<tr><td>"+ new_record.item +"</td><td>"+ new_record.container +"</td><td>"+ new_record.location +"</td><td>"+ new_record.date +"</td><td><button data-controls-modal=\"edit-item-modal\" data-id=\""+new_record.id+"\" class=\"btn small edit\"><img data-controls-modal=\"edit-record-modal\" src=\"images/edit.png\" alt=\"edit\" width=\"13\" height=\"13\"></button><button data-controls-modal=\"delete-item-modal\" data-id=\""+new_record.id+"\" class=\"btn small delete\"><img src=\"images/trash.png\" alt=\"trash\" width=\"10\" height=\"13\" /></button></td></tr>";    
-          $('#found-items-table tbody').prepend(newHtmlRow);
-          
-          //Update Number of Rows Found
-          old_row_count = parseInt($('#found-items-count').text());
-          new_row_count = old_row_count + 1;
-          
-          $('#found-items-count').text(new_row_count);
+        	reload_found_items_table(); 
           	  
        }
      });
@@ -86,11 +114,10 @@ $(document).ready(function() {
 		{
 			
 			record_id = $(this).data('id');
-			row_being_deleted = $(this).closest('tr');
 			
-			confirm = confirm("Are you sure you want to delete this item?");
+			confirm_box = confirm("Are you sure you want to delete this item?");
 			
-			if(confirm == true) {
+			if(confirm_box == true) {
 								
 				url = deleteRecordURL +  record_id.toString();
 				
@@ -99,12 +126,10 @@ $(document).ready(function() {
 	        dataType:'post',
 	        cache:false,
 	        complete: function(callback){
-	        	row_being_deleted.slideUp(4000).remove();	
-	        	//Update Number of Rows Found
-	          old_row_count = parseInt($('#found-items-count').text());
-	          new_row_count = old_row_count - 1;
-	          
-	          $('#found-items-count').text(new_row_count);
+	        	
+	        	confirm_box = null;
+	        	
+	        	reload_found_items_table();
 	        	
 	        	notify("success", "Item Successfully Deleted."); 
 	        }
@@ -113,6 +138,33 @@ $(document).ready(function() {
 			} else {
 				return;
 			}
+		}
+		
+		function reload_found_items_table() 
+		{
+			if (typeof foundItemTable == 'undefined') {
+					foundItemTable = $('#found-items-table').dataTable({
+						"sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+						"bProcessing": true,
+						"bServerSide": true,
+						"sPaginationType": "bootstrap",
+						"bAutoWidth": false,
+						"aaSorting": [[ 3, "desc" ]],
+						"sAjaxSource": getFoundItemsURL,
+						"fnServerData": function (aSource, aoData, fnCallback) {
+							$.ajax({
+								"dataType": "json",
+								"type": "POST",
+								"url": aSource,
+								"data": aoData,
+								"success": fnCallback
+							});
+						}
+					});
+			 } else {
+			 		foundItemTable.fnClearTable( 0 );
+					foundItemTable.fnDraw();
+			 }
 		}
  	
 }); 

@@ -1,5 +1,12 @@
+/* Gold color is #A88552 */
+
 body {
 	padding-top: 80px;
+}
+
+#main {
+	background: url(../images/ucf-watermark-bg.jpg);
+	min-height: 750px;
 }
 
 h3.logo a {
@@ -10,4 +17,47 @@ h3.logo a {
 #found-items-table button {
 	float:left;
 	margin-right: 6px;
+}
+
+/*** Datatable Styles ***/
+div.dataTables_length label {
+    width: 460px;
+    float: left;
+    text-align: left;
+}
+ 
+div.dataTables_length select {
+    width: 75px;
+}
+ 
+div.dataTables_filter label {
+    float: right;
+    width: 460px;
+}
+ 
+div.dataTables_info {
+    padding-top: 8px;
+}
+ 
+div.dataTables_paginate {
+    float: right;
+    margin: 0;
+}
+ 
+table {
+    margin: 1em 0;
+    clear: both;
+}
+
+div.dataTables_filter {
+	float: right;
+}
+
+#found-items-table_processing {
+	margin: 10px 0 -10px;
+	float: right;
+	height: 11px;
+	width: 16px;
+	background-image: url(../images/ajax-loader.gif);
+	text-indent: -9999px;
 }
