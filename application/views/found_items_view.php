@@ -11,6 +11,7 @@
   <script src="<?php echo base_url(); ?>js/bootstrap-alerts.js"></script>
   <script src="<?php echo base_url(); ?>js/bootstrap-tabs.js"></script>
   <script src="<?php echo base_url(); ?>js/bootstrap-dropdown.js"></script>
+  <script src="<?php echo base_url(); ?>js/bootstrap-twipsy.js"></script>
   <script src="<?php echo base_url(); ?>js/loader.js"></script>
 </head>
 <body>
@@ -59,12 +60,8 @@
       </div>
       <div class="span12">
        	<h1 style="float:left;">Found Items</h1>
-       	<p style="float:right;padding-top:10px;color:#A88552;"><span class="found-items-count"><?php echo $num_found_items; ?></span> Items found</p>
-       	<pre>
-       		<?php print_r($found_items); ?>
-       		<?php echo $found_items[0]['item']; ?>
-       	</pre>
-       	<table id="employee-table" class="zebra-striped">
+       	<p style="float:right;padding-top:10px;color:#A88552;"><span id="found-items-count"><?php echo $num_found_items; ?></span> Items found</p>
+       	<table id="found-items-table" class="zebra-striped">
           <thead>
             <tr>
               <th> Item </th>
@@ -83,54 +80,12 @@
 		          	<td><?php echo $found_item['location']; ?></td>
 		          	<td><?php echo $found_item['date']; ?></td>
 		          	<td>
-		          		<button data-controls-modal="edit-item-modal" data-id="<?php echo $found_item['id']; ?>" class="btn small"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button>
-		          		<button data-controls-modal="delete-item-modal" data-id="<?php echo $found_item['id']; ?>" class="btn small"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>
+		          		<button data-controls-modal="return-item-modal" title="Return This Item" data-id="<?php echo $found_item['id']; ?>" class="btn small return"><img data-controls-modal="return-record-modal" src="images/return.png" alt="return" width="13" height="13" /></button>
+		          		<button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="<?php echo $found_item['id']; ?>" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button>
+		          		<button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="<?php echo $found_item['id']; ?>" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>
 		          	</td>
 		          </tr>	
           	<?php endforeach; ?>
-	          
-	          <!--
-<tr>
-	          	<td>White iPhone 4s</td>
-	          	<td>Phones</td>
-	          	<td>1st Floor</td>
-	          	<td>2012-01-12</td>
-	          	<td>
-	          		<button data-controls-modal="edit-item-modal" data-id="1" class="btn small"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button>
-	          		<button data-controls-modal="delete-item-modal" data-id="1" class="btn small"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>
-	          	</td>
-	          </tr>
-	          <tr>
-	          	<td>Financial Accounting Concepts</td>
-	          	<td>Books</td>
-	          	<td>2nd Floor</td>
-	          	<td>2012-01-10</td>
-	          	<td>
-	          		<button data-controls-modal="edit-item-modal" data-id="1" class="btn small"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button>
-	          		<button data-controls-modal="delete-item-modal" data-id="1" class="btn small"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>
-	          	</td>
-	          </tr>
-	          <tr>
-	          	<td>Gray Oakley Shades (Glasses)</td>
-	          	<td>Accessories</td>
-	          	<td>1st Floor</td>
-	          	<td>2012-01-12</td>
-	          	<td>
-	          		<button data-controls-modal="edit-item-modal" data-id="1" class="btn small"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button>
-	          		<button data-controls-modal="delete-item-modal" data-id="1" class="btn small"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>
-	          	</td>
-	          </tr>
-	          <tr>
-	          	<td>Lady Gagas Virginity</td>
-	          	<td>Virginities</td>
-	          	<td>Her Crib</td>
-	          	<td>1986-03-28</td>
-	          	<td>
-	          		<button data-controls-modal="edit-item-modal" data-id="1" class="btn small"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button>
-	          		<button data-controls-modal="delete-item-modal" data-id="1" class="btn small"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>
-	          	</td>
-	          </tr>
--->
          </tbody>
        </table>
       </div>
