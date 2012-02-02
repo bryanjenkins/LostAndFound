@@ -13,7 +13,7 @@ class Found_items extends CI_Controller {
 			$data['found_items'][$i]['date'] = $this->dateformat->format_date($date);
 		}
 		
-		//$this->prowl->send('Bryan Jenkins', 'Just returned the iPhone 4s to Jarrod Matosky');
+		$this->prowl->send('Bryan Jenkins', 'Bryan Jenkins just returned CJs lost Pants to Cory Ehrenberg');
 		$this->load->view('found_items_view', $data);
 	}
 	
