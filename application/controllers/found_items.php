@@ -13,7 +13,7 @@ class Found_items extends CI_Controller {
 			$data['found_items'][$i]['date'] = $this->dateformat->format_date($date);
 		}
 		
-		$this->prowl->send('Bryan Jenkins', 'Bryan Jenkins just returned CJs lost Pants to Cory Ehrenberg');
+		//$this->prowl->send('Bryan Jenkins', 'Bryan Jenkins just returned CJs lost Pants to Cory Ehrenberg');
 		$this->load->view('found_items_view', $data);
 	}
 	
@@ -30,14 +30,14 @@ class Found_items extends CI_Controller {
 		echo $this->datatables->generate();
 	}
 	
-	function create()
+	function create_found_item()
 	{
 		$data = array(
 			'item' => $this->input->post('add_record_item'),
 			'container_id' => $this->input->post('add_record_container'),
 			'location_id' => $this->input->post('add_record_location'),
 			'user_id' => 1,
-			'status_id' => 3
+			'status_id' => 1
 		);
 		
 		
@@ -45,7 +45,41 @@ class Found_items extends CI_Controller {
 		
 	}
 	
-	function update_table_with_new_record()
+	function create_container()
+	{
+		$data = array(
+			'container' => $this->input->post('add_container')
+		);
+		
+		
+		$this->containers_model->add_record($data);		
+		
+	}
+	
+	function json_containers_list() 
+	{
+		echo json_encode($this->containers_model->get_containers());
+	}
+	
+	function create_location()
+	{
+		$data = array(
+			'location' => $this->input->post('add_location')
+		);
+		
+		
+		$this->locations_model->add_record($data);		
+		
+	}
+	
+	function json_locations_list() 
+	{
+		echo json_encode($this->locations_model->get_locations());
+	}
+	
+	
+	/*
+function update_table_with_new_record()
 	{
 		$id = $this->uri->segment(3);
 		
@@ -66,7 +100,9 @@ class Found_items extends CI_Controller {
 		}
 		
 		
+
 	}
+	*/
 	
 	function delete()
 	{

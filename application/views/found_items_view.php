@@ -32,8 +32,10 @@
 	            <li class="dropdown">
 	              <a href="#" class="dropdown-toggle">Jaime Smeriglio</a>
 	              <ul class="dropdown-menu">
-	                <li><a href="#">Account Settings</a></li>
-	                <li><a href="#">Preferences</a></li>
+	                <li><a href="#">Add New Account</a></li>
+	                <li class="divider"></li>
+	                <li><a href="#" data-controls-modal="add-container-modal">Add a Container</a></li>
+	                <li><a href="#" data-controls-modal="add-location-modal">Add a Location</a></li>
 	                <li class="divider"></li>
 	                <li><a href="#">Logout</a></li>
 	              </ul>
@@ -56,6 +58,12 @@
         <h1>Add Item</h1>
         <p>Here is a list of the items currently stored in containers. If you have found a new one: </p>
         <p><button id="add-item" data-controls-modal="add-item-modal" class="btn">Add an Item</button></p>
+        <!--
+<p>If the container does not exist: </p>
+        <p><button id="add-item" data-controls-modal="add-container-modal" class="btn">Add a Container</button></p>
+        <p>Or, if the location does not exist: </p>
+        <p><button id="add-item" data-controls-modal="add-location-modal" class="btn">Add a Location</button></p>
+-->
       </div>
       <div class="span12">
        	<ul class="tabs" data-tabs="tabs" >
@@ -88,14 +96,14 @@
       </div>
     </div>
     
-    <!-- Add Modal -->
+    <!-- Add Item Modal -->
 		<div id="add-item-modal" class="modal fade">
 		  <div class="modal-header">
 		    <a href="#" class="close">x</a>
 		    <h3>Add an Item</h3>
 		  </div>
 		  <div class="modal-body">
-		    <?php echo form_open('found_items/create', 'id="create_found_item"'); ?>
+		    <?php echo form_open('found_items/create_found_item', 'id="create_found_item"'); ?>
 		      <div class="clearfix">
 		        <label for="add_record_item">Item:</label>
 		        <div class="input"><input type="text" id="add_record_item" name="add_record_item" placeholder="White iPhone 4s" /></div>
@@ -130,9 +138,49 @@
 		    <button id="create_found_item_submit_btn" class="btn primary">Add</button>
 		  </div>
 		</div>
-		<!-- End Add Modal -->
+		<!-- End Add Item Modal -->
 		
-		<!-- Edit Modal -->
+		<!-- Add Add Location Modal -->
+		<div id="add-location-modal" class="modal fade">
+		  <div class="modal-header">
+		    <a href="#" class="close">x</a>
+		    <h3>Add a Location</h3>
+		  </div>
+		  <div class="modal-body">
+		    <?php echo form_open('found_items/create_location', 'id="create_new_location"'); ?>
+		      <div class="clearfix">
+		        <label for="add_location">Location Name:</label>
+		        <div class="input"><input type="text" id="add_location" name="add_location" placeholder="Lobby" /></div>
+		      </div>
+		    <?php echo form_close(); ?>
+		  </div>
+		  <div class="modal-footer">
+		    <button id="create_location_submit_btn" class="btn primary">Add</button>
+		  </div>
+		</div>
+		<!-- End Add Location Modal -->
+		
+		<!-- Add Add Container Modal -->
+		<div id="add-container-modal" class="modal fade">
+		  <div class="modal-header">
+		    <a href="#" class="close">x</a>
+		    <h3>Add a Container</h3>
+		  </div>
+		  <div class="modal-body">
+		    <?php echo form_open('found_items/create_container', 'id="create_new_container"'); ?>
+		      <div class="clearfix">
+		        <label for="add_container">Container Name:</label>
+		        <div class="input"><input type="text" id="add_container" name="add_container" placeholder="Cell Phones" /></div>
+		      </div>
+		    <?php echo form_close(); ?>
+		  </div>
+		  <div class="modal-footer">
+		    <button id="create_container_submit_btn" class="btn primary">Add</button>
+		  </div>
+		</div>
+		<!-- End Add Container Modal -->
+		
+		<!-- Edit Item Modal -->
 		<div id="edit-item-modal" class="modal fade">
 		  <div class="modal-header">
 		    <a href="#" class="close">x</a>
@@ -183,7 +231,7 @@
 		    <button id="create-item" class="btn primary">Add</button>
 		  </div>
 		</div>
-		<!-- End Edit Modal -->
+		<!-- End Edit Item Modal -->
 
   </div>
 </body>
