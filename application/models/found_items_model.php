@@ -20,7 +20,7 @@ class Found_items_model extends CI_Model {
 	{
 		
 		$q = $this->db->where('found_items.id', $id)
-									->select('found_items.id as id, found_items.item as item, containers.container as container, locations.location as location, found_items.found_date as date')
+									->select('found_items.id as id, found_items.item as item, containers.id as container, locations.id as location')
 									->from('found_items')
 									->join('containers', 'found_items.container_id = containers.id')
 									->join('locations', 'found_items.location_id = locations.id');
@@ -57,6 +57,7 @@ class Found_items_model extends CI_Model {
 	
 	function update_record($id, $data)
 	{
+		$this->db->set('edit_date', 'NOW()', FALSE); 
 		$this->db->where('id', $id);
 		$this->db->update('found_items', $data);
 	}

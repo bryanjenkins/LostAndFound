@@ -45,6 +45,20 @@ class Found_items extends CI_Controller {
 		
 	}
 	
+	function update_found_item()
+	{
+		$id = $this->input->post('edit_record_id');
+		
+		$data = array(
+			'item' => $this->input->post('edit_record_item'),
+			'container_id' => $this->input->post('edit_record_container'),
+			'location_id' => $this->input->post('edit_record_location'),
+			'last_edit_by' => 1
+		);
+		
+		$this->found_items_model->update_record($id, $data);	
+	}
+	
 	function create_container()
 	{
 		$data = array(
@@ -54,6 +68,21 @@ class Found_items extends CI_Controller {
 		
 		$this->containers_model->add_record($data);		
 		
+	}
+	
+	function json_get_found_item()
+	{
+		
+		$id = $this->uri->segment(3);
+		
+		if($this->found_items_model->record_exists($id)) {
+			
+			echo json_encode($this->found_items_model->get_record($id));
+		
+		} else {
+			
+			return false;
+		}
 	}
 	
 	function json_containers_list() 

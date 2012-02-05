@@ -111,25 +111,13 @@
 		      <div class="clearfix">
 		        <label for="add_record_container">Container:</label>
 		        <div class="input">
-              <select class="large" name="add_record_container" id="add_record_container">
-                <option value="1">Cell Phones</option>
-                <option value="2">Computers</option>
-                <option value="3">Misc Electronics</option>
-                <option value="4">Books</option>
-                <option value="5">Wallets</option>
-                <option value="6">Car Keys</option>
-                <option value="7">Accessories</option>
-              </select>
+              <select class="large" name="add_record_container" id="add_record_container"></select>
             </div>
 		      </div>
 		      <div class="clearfix">
 		        <label for="add_record_location">Location Found:</label>
 		        <div class="input">
-              <select class="large" name="add_record_location" id="add_record_location">
-                <option value="1">Lobby</option>
-                <option value="2">1st Floor</option>
-                <option value="3">2nd Floor</option>
-              </select>
+              <select class="large" name="add_record_location" id="add_record_location"></select>
             </div>
 		      </div>
 		    <?php echo form_close(); ?>
@@ -187,48 +175,28 @@
 		    <h3>Edit an Item</h3>
 		  </div>
 		  <div class="modal-body">
-		    <form id="employee-form">
+		    <?php echo form_open('found_items/update_found_item', 'id="edit_found_item"'); ?>
+		      <input type="hidden" name="edit_record_id" id="edit_record_id" value="" /> 
 		      <div class="clearfix">
-		        <label for="firstName">Item:</label>
-		        <div class="input"><input type="text" name="firstName" placeholder="White iPhone 4s" /></div>
+		        <label for="edit_record_item">Item:</label>
+		        <div class="input"><input type="text" id="edit_record_item" name="edit_record_item" placeholder="White iPhone 4s" /></div>
 		      </div>
 		      <div class="clearfix">
-		        <label for="container">Container:</label>
+		        <label for="edit_record_container">Container:</label>
 		        <div class="input">
-              <select class="large" name="mediumSelect" id="container">
-                <option>Cell Phones</option>
-                <option>Computers</option>
-                <option>Misc Electronics</option>
-                <option>Books</option>
-                <option>Wallets</option>
-                <option>Car Keys</option>
-                <option>Accessories</option>
-              </select>
+              <select class="large" name="edit_record_container" id="edit_record_container"></select>
             </div>
 		      </div>
 		      <div class="clearfix">
-		        <label for="location">Location Found:</label>
+		        <label for="edit_record_location">Location Found:</label>
 		        <div class="input">
-              <select class="large" name="mediumSelect" id="location">
-                <option>Lobby</option>
-                <option>1st Floor</option>
-                <option>2nd Floor</option>
-                <option>Books</option>
-                <option>Wallets</option>
-                <option>Car Keys</option>
-              </select>
+              <select class="large" name="edit_record_location" id="edit_record_location"></select>
             </div>
 		      </div>
-		      <div class="clearfix">
-		        <label for="role">Date:</label>
-		        <div class = "input"> 
-						  <input type="date" id="expires" placeholder="yyyy-mm-dd" /> 
-						</div> 
-		      </div>
-		    </form>
+		    <?php echo form_close(); ?>
 		  </div>
 		  <div class="modal-footer">
-		    <button id="create-item" class="btn primary">Add</button>
+		    <button id="update_found_item_submit_btn" class="btn primary">Update</button>
 		  </div>
 		</div>
 		<!-- End Edit Item Modal -->
