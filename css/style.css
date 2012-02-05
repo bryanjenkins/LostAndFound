@@ -61,3 +61,7 @@ div.dataTables_filter {
 	background-image: url(../images/ajax-loader.gif);
 	text-indent: -9999px;
 }
+
+{
+	margin-top: 0;
+}
