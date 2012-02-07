@@ -19,13 +19,46 @@ class Found_items extends CI_Controller {
 	
 	function found_items_ajax_listener()
 	{
+		
+		$today = date("Y-m-d h:i:s");
 		$this->load->helper('datatables');
-		$this->datatables->select('found_items.id as id, found_items.item as item, containers.container as container, locations.location as location, found_items.found_date as date')
+		$this->datatables->where('found_items.status_id', 1)
+								->where('found_items.expiration >', $today)
+								->select('found_items.id as id, found_items.item as item, containers.container as container, locations.location as location, found_items.found_date as date')
 					 			->from('found_items')
 								->join('containers', 'found_items.container_id = containers.id')
 								->join('locations', 'found_items.location_id = locations.id')
 	    		  	  ->edit_column('date', '$1', 'dateformat(date)')
-					  		->add_column('action', '<button data-controls-modal="claim-item-modal" title="Return This Item" data-id="$1" class="btn small return"><img data-controls-modal="claim-record-modal" src="images/return.png" alt="return" width="13" height="13" /></button><button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="$1" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button><button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="$1" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>', 'id')
+					  		->add_column('action', '<button title="Return This Item" data-id="$1" data-name="$2" class="btn small return"><img  src="images/return.png" alt="return" width="13" height="13" /></button><button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="$1" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button><button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="$1" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>', 'id, item')
+					  		->unset_column('id');
+		echo $this->datatables->generate();
+	}
+	
+	function claimed_found_items_ajax_listener()
+	{
+		$this->load->helper('datatables');
+		$this->datatables->where('found_items.status_id', 2)
+								->select('found_items.id as id, found_items.item as item, containers.container as container, locations.location as location, found_items.found_date as date')
+					 			->from('found_items')
+								->join('containers', 'found_items.container_id = containers.id')
+								->join('locations', 'found_items.location_id = locations.id')
+	    		  	  ->edit_column('date', '$1', 'dateformat(date)')
+					  		->add_column('action', '<button title="Return This Item" data-id="$1" data-name="$2" class="btn small return"><img  src="images/return.png" alt="return" width="13" height="13" /></button><button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="$1" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button><button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="$1" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>', 'id, item')
+					  		->unset_column('id');
+		echo $this->datatables->generate();
+	}
+	
+	function expired_found_items_ajax_listener()
+	{
+		$today = date("Y-m-d h:i:s");
+		$this->load->helper('datatables');
+		$this->datatables->where('found_items.expiration <', $today)
+								->select('found_items.id as id, found_items.item as item, containers.container as container, locations.location as location, found_items.found_date as date')
+					 			->from('found_items')
+								->join('containers', 'found_items.container_id = containers.id')
+								->join('locations', 'found_items.location_id = locations.id')
+	    		  	  ->edit_column('date', '$1', 'dateformat(date)')
+					  		->add_column('action', '<button title="Return This Item" data-id="$1" data-name="$2" class="btn small return"><img  src="images/return.png" alt="return" width="13" height="13" /></button><button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="$1" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button><button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="$1" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>', 'id, item')
 					  		->unset_column('id');
 		echo $this->datatables->generate();
 	}
@@ -55,9 +88,22 @@ class Found_items extends CI_Controller {
 			'location_id' => $this->input->post('edit_record_location'),
 			'last_edit_by' => 1
 		);
-		
-		
+				
 		$this->found_items_model->update_record($id, $data);	
+	}
+	
+	function claim_found_item()
+	{
+		$id = $this->input->post('claim_record_id');
+		
+		$data = array(
+			'returned_to_name' => $this->input->post('returned_to'),
+			'returned_to_phone' => $this->input->post('returned_to_phone'),
+			'returned_by' => 1,
+			'status_id' => 2
+		);
+				
+		$this->found_items_model->claim_record($id, $data);	
 	}
 	
 	function create_container()

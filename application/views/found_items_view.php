@@ -201,6 +201,33 @@
 		  </div>
 		</div>
 		<!-- End Edit Item Modal -->
+		
+		<!-- Claim Item Modal -->
+		<div id="claim-item-modal" class="modal fade">
+		  <div class="modal-header">
+		    <a href="#" class="close">x</a>
+		    <h3 id="claimed-item-header"></h3>
+		  </div>
+		  <div class="modal-body">
+		    <?php echo form_open('found_items/claim_found_item', 'id="claim_found_item"'); ?>
+		      <input type="hidden" name="claim_record_id" id="claim_record_id" value="" /> 
+		      <div class="clearfix">
+		        <label for="returned_to">Returned To:</label>
+		        <div class="input"><input type="text" id="returned_to" name="returned_to" placeholder="John Doe" /></div>
+		      </div>
+		      <div class="clearfix">
+		        <label for="returned_to_phone">Phone #:</label>
+		        <div class="input">
+              <input type="text" name="returned_to_phone" id="returned_to_phone" placeholder="555-555-5555" />
+            </div>
+		      </div>
+		    <?php echo form_close(); ?>
+		  </div>
+		  <div class="modal-footer">
+		    <button id="claim_found_item_submit_btn" class="btn primary">Update</button>
+		  </div>
+		</div>
+		<!-- End Claim Item Modal -->
 
   </div>
 </body>

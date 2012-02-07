@@ -12,6 +12,7 @@ $(document).ready(function() {
 	var addLocationModal = $("#add-location-modal").modal({ backdrop: "static" });
 	var addContainerModal = $("#add-container-modal").modal({ backdrop: "static" });
  	var editRecordModal = $("#edit-item-modal").modal({ backdrop: "static" });
+ 	var claimRecordModal = $("#claim-item-modal").modal({ backdrop: "static" }).on('hide', clear_claimed_item_header);
  	
  	var addRecordURL = siteurl + "found_items/update_table_with_new_record/";
  	var editRecordURL = siteurl + "found_items/edit_found_item/";
@@ -68,7 +69,7 @@ $(document).ready(function() {
 	    	add_record_location: $('#add_record_location').val()
 	    };
 	    	    	    
-	    var url = $("#create_found_item").attr('action');
+	    var url = $('#create_found_item').attr('action');
 	            
 	    $.ajax({
         url:url,
@@ -104,7 +105,7 @@ $(document).ready(function() {
 	    	edit_record_location: $('#edit_record_location').val()
 	  };
 	  
-	  var url = $("#edit_found_item").attr('action');
+	  var url = $('#edit_found_item').attr('action');
 	  
 	  $.ajax({
         url:url,
@@ -114,7 +115,7 @@ $(document).ready(function() {
         success:function() {
             
             editRecordModal.modal("hide");
-            
+                        
             reload_found_items_table(); 
             
             // Reset Form Values
@@ -129,6 +130,47 @@ $(document).ready(function() {
 	  
 	  
 	});
+	
+	//Claim an Item
+	$('#found-items-table').delegate(".return", "click", claim_item_record);
+	
+	$('#claim_found_item_submit_btn').click(function(e) {
+		e.preventDefault();
+		var formData = {
+				claim_record_id: $('#claim_record_id').val(),
+				returned_to: $('#returned_to').val(),
+	    	returned_to_phone: $('#returned_to_phone').val()
+	  };
+	  
+	  console.log(formData);
+	  
+	  var url = $('#claim_found_item').attr('action');
+	  
+	  $.ajax({
+        url:url,
+        type:'post',
+        cache:false,
+        data:formData,
+        success:function() {
+            
+            claimRecordModal.modal("hide");
+                        
+            reload_found_items_table(); 
+            
+            // Reset Form Values
+            $('#claim_found_item').each (function(){
+						  this.reset();
+						});
+						
+						// Notify User
+            notify("success", "Item Successfully Claimed."); 
+            }
+     	});
+	  
+	  
+	});
+	
+	
 		
 	//Delete a Found Item
 	$('#found-items-table').delegate(".delete", "click", delete_item_record);	
@@ -148,7 +190,7 @@ $(document).ready(function() {
 	    	add_container: $('#add_container').val()
 	    };
 	    	    	    	    
-	    var url = $("#create_new_container").attr('action');
+	    var url = $('#create_new_container').attr('action');
 	            
 	    $.ajax({
         url:url,
@@ -187,7 +229,7 @@ $(document).ready(function() {
 	    	add_location: $('#add_location').val()
 	    };
 	    	    	    	    
-	    var url = $("#create_new_location").attr('action');
+	    var url = $('#create_new_location').attr('action');
 	            
 	    $.ajax({
         url:url,
@@ -234,6 +276,24 @@ $(document).ready(function() {
  		
   	getJsonRecord(url, "edit");
  
+  }
+  
+  function claim_item_record()
+  {
+  	
+  	id 	 = $(this).data('id');
+  	item = $(this).data('name');
+  	
+  	$("#claim_record_id").val(id);
+  	
+  	$("#claimed-item-header").append("Claim: " + item);
+  	
+  	claimRecordModal.modal('show');
+  }
+  
+  function clear_claimed_item_header()
+  {
+  	$("#claimed-item-header").empty()
   }
 		
 	function delete_item_record()
@@ -332,5 +392,6 @@ $(document).ready(function() {
 				
 		});
 	}
+	
  	
 }); 

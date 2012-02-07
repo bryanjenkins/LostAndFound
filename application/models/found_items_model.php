@@ -47,8 +47,10 @@ class Found_items_model extends CI_Model {
 	
 	function add_record($data)
 	{
+		$expirationDate = $this->dateformat->offset_date_with_months(3);
+		
 		$this->db->set('found_date', 'NOW()', FALSE); 
-		$this->db->set('expiration', 'NOW()', FALSE);
+		$this->db->set('expiration', $expirationDate);
 		$this->db->insert('found_items', $data);
 		
 		// For jQuery to add new row
@@ -58,6 +60,13 @@ class Found_items_model extends CI_Model {
 	function update_record($id, $data)
 	{
 		$this->db->set('edit_date', 'NOW()', FALSE); 
+		$this->db->where('id', $id);
+		$this->db->update('found_items', $data);
+	}
+	
+	function claim_record($id, $data)
+	{
+		$this->db->set('returned_date', 'NOW()', FALSE); 
 		$this->db->where('id', $id);
 		$this->db->update('found_items', $data);
 	}
