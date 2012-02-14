@@ -1,7 +1,63 @@
 /* Gold color is #A88552 */
 
+@font-face {
+    font-family: 'DroidSerifRegular';
+    src: url('fonts/DroidSerif-Regular-webfont.eot');
+    src: url('fonts/DroidSerif-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/DroidSerif-Regular-webfont.woff') format('woff'),
+         url('fonts/DroidSerif-Regular-webfont.ttf') format('truetype'),
+         url('fonts/DroidSerif-Regular-webfont.svg#DroidSerifRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'DroidSerifItalic';
+    src: url('fonts/DroidSerif-Italic-webfont.eot');
+    src: url('fonts/DroidSerif-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/DroidSerif-Italic-webfont.woff') format('woff'),
+         url('fonts/DroidSerif-Italic-webfont.ttf') format('truetype'),
+         url('fonts/DroidSerif-Italic-webfont.svg#DroidSerifItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'DroidSerifBold';
+    src: url('fonts/DroidSerif-Bold-webfont.eot');
+    src: url('fonts/DroidSerif-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/DroidSerif-Bold-webfont.woff') format('woff'),
+         url('fonts/DroidSerif-Bold-webfont.ttf') format('truetype'),
+         url('fonts/DroidSerif-Bold-webfont.svg#DroidSerifBold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'DroidSerifBoldItalic';
+    src: url('fonts/DroidSerif-BoldItalic-webfont.eot');
+    src: url('fonts/DroidSerif-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/DroidSerif-BoldItalic-webfont.woff') format('woff'),
+         url('fonts/DroidSerif-BoldItalic-webfont.ttf') format('truetype'),
+         url('fonts/DroidSerif-BoldItalic-webfont.svg#DroidSerifBoldItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body {
 	padding-top: 80px;
+}
+
+h1 {
+	font-family: 'DroidSerifBold';
+	font-size: 25px;
+	/*
+	margin-bottom: 5px;
+	*/
 }
 
 #main {
@@ -11,10 +67,12 @@ body {
 
 h3.logo a {
 	padding-left: 50px;
+	padding-top: 9px;
 	background: url(../images/ucf-logo.png) left no-repeat;
+	font-family: 'DroidSerifBoldItalic';
 }
 
-#found-items-table button {
+.datatable button {
 	float:left;
 	margin-right: 6px;
 }
@@ -53,7 +111,7 @@ div.dataTables_filter {
 	float: right;
 }
 
-#found-items-table_processing {
+.dataTables_processing {
 	margin: 10px 0 -10px;
 	float: right;
 	height: 11px;

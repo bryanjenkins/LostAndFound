@@ -2,10 +2,22 @@
 
 class Found_items extends CI_Controller {
 
+	function __construct()
+	{
+		parent::__construct();
+		session_start();
+
+		if (!isset($_SESSION['id'])) {
+			redirect('login');
+		}
+
+	}
+	
 	function index()
 	{
 		$data['found_items'] = $this->found_items_model->get_records();
 		$data['num_found_items'] = count($data['found_items']);
+		$data['name'] = $_SESSION['name'];
 		
 		//Format Dates From xxxx:xx:xx xx:xx:xx To dd/mm/yyyy
 		for ($i = 0; $i < $data['num_found_items']; $i++) {
@@ -29,7 +41,7 @@ class Found_items extends CI_Controller {
 								->join('containers', 'found_items.container_id = containers.id')
 								->join('locations', 'found_items.location_id = locations.id')
 	    		  	  ->edit_column('date', '$1', 'dateformat(date)')
-					  		->add_column('action', '<button title="Return This Item" data-id="$1" data-name="$2" class="btn small return"><img  src="images/return.png" alt="return" width="13" height="13" /></button><button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="$1" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button><button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="$1" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>', 'id, item')
+					  		->add_column('action', '<button title="Return This Item" data-id="$1" data-name="$2" class="btn small return"><img  src="images/return.png" alt="return" width="13" height="13" /></button><button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="$1" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button><button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="$1" data-name="$2" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>', 'id, item')
 					  		->unset_column('id');
 		echo $this->datatables->generate();
 	}
@@ -38,13 +50,11 @@ class Found_items extends CI_Controller {
 	{
 		$this->load->helper('datatables');
 		$this->datatables->where('found_items.status_id', 2)
-								->select('found_items.id as id, found_items.item as item, containers.container as container, locations.location as location, found_items.found_date as date')
+								->select('found_items.id as id, found_items.item as item, found_items.returned_to_name as name, found_items.returned_to_phone as phone, users.name as user, found_items.returned_date as date')
 					 			->from('found_items')
-								->join('containers', 'found_items.container_id = containers.id')
-								->join('locations', 'found_items.location_id = locations.id')
+								->join('users', 'found_items.user_id = users.id')
 	    		  	  ->edit_column('date', '$1', 'dateformat(date)')
-					  		->add_column('action', '<button title="Return This Item" data-id="$1" data-name="$2" class="btn small return"><img  src="images/return.png" alt="return" width="13" height="13" /></button><button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="$1" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button><button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="$1" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>', 'id, item')
-					  		->unset_column('id');
+	    		  	  ->unset_column('id');
 		echo $this->datatables->generate();
 	}
 	
@@ -53,12 +63,13 @@ class Found_items extends CI_Controller {
 		$today = date("Y-m-d h:i:s");
 		$this->load->helper('datatables');
 		$this->datatables->where('found_items.expiration <', $today)
-								->select('found_items.id as id, found_items.item as item, containers.container as container, locations.location as location, found_items.found_date as date')
+								->where('found_items.status_id', 1)
+								->select('found_items.id as id, found_items.item as item, containers.container as container, locations.location as location, found_items.found_date as date, found_items.expiration as expiration')
 					 			->from('found_items')
 								->join('containers', 'found_items.container_id = containers.id')
 								->join('locations', 'found_items.location_id = locations.id')
 	    		  	  ->edit_column('date', '$1', 'dateformat(date)')
-					  		->add_column('action', '<button title="Return This Item" data-id="$1" data-name="$2" class="btn small return"><img  src="images/return.png" alt="return" width="13" height="13" /></button><button data-controls-modal="edit-item-modal" title="Edit This Item"  data-id="$1" class="btn small edit"><img data-controls-modal="edit-record-modal" src="images/edit.png" alt="edit" width="13" height="13" /></button><button data-controls-modal="delete-item-modal" title="Delete This Item"  data-id="$1" class="btn small delete"><img src="images/trash.png" alt="trash" width="10" height="13" /></button>', 'id, item')
+	    		  	  ->edit_column('expiration', '$1', 'dateformat(expiration)')
 					  		->unset_column('id');
 		echo $this->datatables->generate();
 	}
@@ -203,6 +214,12 @@ function update_table_with_new_record()
 			//Set session update to let people know the record doesn't exist
 			redirect('/found_items/', 'refresh');
 		}
+	}
+	
+	function logout()
+	{
+		session_destroy();
+		redirect('login');
 	}
 
 }

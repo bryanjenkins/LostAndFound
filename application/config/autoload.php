@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database', 'dateformat', 'prowl', 'datatables');
+$autoload['libraries'] = array('database', 'session', 'dateformat', 'prowl', 'datatables', 'phone');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('found_items_model', 'containers_model', 'locations_model');
+$autoload['model'] = array('found_items_model', 'lost_items_model', 'containers_model', 'locations_model', 'users_model');
 
 
 /* End of file autoload.php */
